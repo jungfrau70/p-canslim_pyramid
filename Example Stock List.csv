@@ -1,0 +1,6 @@
+Symbol,Name,Exchange,Sector,Industry,SCTR,Universe,Close,Volume
+AAPL,"Apple, Inc.",NASD,Technology,Computer Hardware,69.4,lrg,131.336,43570428
+AMAT,"Applied Materials, Inc.",NASD,Technology,Semiconductors,92.7,lrg,99.37,1862179
+CVS,CVS Health Corp.,NYSE,Health Care,Pharmaceuticals,46.7,lrg,74.753,2468926
+SCHW,Charles Schwab Corp.,NYSE,Financial,Investment Services,93.8,lrg,59.85,6268668
+WMT,Walmart Inc.,NYSE,Consumer Staples,Personal Products,34.3,lrg,148.494,1637386
