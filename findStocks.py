@@ -22,9 +22,9 @@ Rules used in these scripts
 5. Stock price can not be decreasing recently
 
 Additional rules that automatically disqualify stock
-1. Too much missing data
 2. Foreign currency
-3. Two most recent quarters have negative net income
+3. Recent negative net income
+4. Stock price has a decreasing trend
 """
 
 import argparse

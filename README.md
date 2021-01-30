@@ -10,12 +10,13 @@ For details about how stocks are chosen please go to **INSERT MEDIUM ARTICLE LIN
 You can install the necessary packages using your favorite package manager
 
 Using PIP: `pip install -r requirements.txt`
+
 Using Anaconda: `conda install --file requirements.txt`
 
-Note that I have not been able to download `yfinance` using Anaconda and if
+I have not been able to download `yfinance` using Anaconda and if
 you choose to use `conda install --file requirements.txt` it may not work.
 In this case remove `yfinance==0.1.54` from the *requirements.txt* and then
-download yfinance seperately using `pip install yfiannce`
+download yfinance seperately using `pip install yfiannce`.
 
 ## Usage
 
@@ -24,7 +25,7 @@ You can run several options from your command-line interpreter.
 To download data using API
 - `python findStocks.py --stock_list "Example Stock List.csv" --key "YOURAPIKEY"`
 
-To use existing
+To use data already downloaded
 - `python findStocks.py --stock_list "Example Stock List.csv" --data_folder "Example Data"`
 
 To get some help
@@ -39,10 +40,10 @@ argument `--not_flexible`.
 If the program is run successfully the following folders will be saved:
 - **Results.csv* summarizing the Results
 - **Processed.csv* keeps track of which stocks have already been processed
-- *Data* folder which includes data downloaded using Alpha Vantage API
+- *Data* folder includes data downloaded using Alpha Vantage API
 - *Processed* folder includes condensed financial information that was used to determine which stocks are good
 
-You can also check out the **Processed.csv* to find error messages indicating
+You can also look at the **Processed.csv* to find error messages indicating
 which stocks were unable to be processed. Check out the docstring at the top of
 `findStocksClasses.py` for more information about the error messages and how
 to correct them.
