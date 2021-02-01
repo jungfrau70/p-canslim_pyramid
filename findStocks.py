@@ -3,17 +3,6 @@
 """
 Script to find new stocks to invest in.
 
-CAN SLIM Rules
-
-Rules - Quarterly
-1. Aim for EPS 25-30% growth
-2. Earnings growth should accelerate sometime in the 10 quarters before
-3. Sales should grow by at least 25% (grossProfit)
-
-Rules - Annual
-1. EPS increased in each of the last three years (25-50% from last year)
-2. Return on equity of 17% or more.
-
 Rules used in these scripts
 1. Annual - EPS must increase by 20%
 2. Annual - ROE must be over 17%
