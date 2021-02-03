@@ -19,6 +19,9 @@ def getData(s, folder, key):
     b = gather(s, 'BALANCE_SHEET', key)
     time.sleep(0.5)
 
+    assert 'Information' not in i.keys(), (
+        'Max number of API calls reached for the day: 500 calls.')
+
     if (
             i == {}
             or b == {}
@@ -77,7 +80,9 @@ def gather(s, reportType, key):
 def download(file, dataFolder, apikey):
     """Download stock ticker data using Alpha Vantage."""
     dfStocks = pd.read_csv(file)
-    p = range(len(dfStocks))
+
+    assert type(dfStocks.loc[len(dfStocks) - 1, 'Symbol']) is str, (
+        'The last row does not have a symbol. Make sure last row is not blank.')
 
     # If first time opening file, add column of all zeros
     if 'Downloaded' not in dfStocks.columns:
@@ -91,10 +96,11 @@ def download(file, dataFolder, apikey):
 
     i = 0
     # Alpha Vantage API download limit of 500 files has been reached
-    while i < len(p) and i < 500:
+    while i < len(dfStocks) and i < 500:
         # Check to see if already downloaded
         # 1: downloaded, -1: error downloading
-        if dfStocks.loc[p[i], 'Downloaded'] in {-1, 1}:
+        if dfStocks.loc[i, 'Downloaded'] in {-1, 1}:
+            i += 1
             continue
 
         # Wait for API to allow download
@@ -112,17 +118,20 @@ def download(file, dataFolder, apikey):
             count, seconds, earlier = reset()
             dfStocks.to_csv(file, index=False)
 
-        stock = dfStocks.iloc[p[i], 0]
-        print('Downloading ' + stock + '. Index: ' + str(i) + ' | ' + str(p[i]))
+        stock = dfStocks.iloc[i, 0]
+        try:
+            print('Downloading ' + stock + '. Index: ' + str(i) + ' | ' + str(i))
+        except TypeError:
+            import pdb; pdb.set_trace()
 
         # Get data ============================================================
         returned = getData(stock, dataFolder, apikey)
 
         if returned != 'no issues':
             print('Error message: ' + returned + '. Skipping')
-            dfStocks.loc[p[i], 'Downloaded'] = '-1'
+            dfStocks.loc[i, 'Downloaded'] = '-1'
         else:
-            dfStocks.loc[p[i], 'Downloaded'] = 1
+            dfStocks.loc[i, 'Downloaded'] = 1
 
         count += 2
         i += 1
