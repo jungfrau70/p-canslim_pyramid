@@ -92,7 +92,7 @@ def preliminaryTests(stock):
     if stock.errorMessage != 'processed':
         return
 
-    # Reduce income statement and balance sheet into on DF
+    # Reduce income statement and balance sheet into one DF
     stock.reduceDF()
 
 

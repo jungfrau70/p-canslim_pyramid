@@ -3,7 +3,7 @@
 """
 Classes for findStock scripts.
 
-After running the script look thorugh the *_Processed.csv and correct any errors
+After running the script look through the *_Processed.csv and correct any errors
 Errors that can be corrected:
     - data does not exist: This error occurrs when a user inputs 0 when asked
         for stock information and the data does not exist. In which case the
@@ -145,52 +145,64 @@ class Stock():
 
     def checkSlope(self):
         """Check the modified average slope of the stock price."""
+        def getBackYearMonth(y, m):
+            """Get year and month by subtracting one month."""
+            if m == 1:
+                y -= 1
+                m = 12
+            else:
+                m -= 1
+            return dt(y, m, 1)
+
         # Get a list of days to use the stock price
         dates = []
-        year = 2020
-        month = 5
         today = dt.now()
-        # Check if day of the month is less than 10. If it is then the slope
-        # can be skewed heavily by the most recent price changes.
-        if today.day < 10:
-            # Change today to be the first day of the month. This allows if
-            # statement in while loop to avoid including day in dates list
-            today = dt(today.year, today.month, 1)
+        year = today.year
+        month = today.month
 
-        d = dt(year, month, 1)
-        while d <= today:
-            dates.append(d)
-            if month != 12:
-                month += 1
-            else:
-                year += 1
-                month = 1
-            d = dt(year, month, 2)
+        # If the day of the month is greater than 10, calculate the slope of
+        # the current month. Otherwise, calculate the slop from today to the
+        # first day of the previous month
+        if today.day > 10:
+            dates.append(dt(year, month, 1))
 
-        assert dt.now() < dt(2021, 5, 2), (
-            'period 1y inadequate for analysis, increase period')
+        back = getBackYearMonth(year, month)
+        dates.append(back)
+
+        # Get six different date ranges, i.e. 6 months
+        while len(dates) < 6:
+            back = getBackYearMonth(back.year, back.month)
+            dates.append(back)
+
+        dates.sort()
+
+        # Download ticker data
         df = yf.download(self.s, period='1y', interval='1d')
+        # Get the most recent close price
         last = df.iloc[-1, 3]
         self.changes = []
         adjSlope = 0
         normalizer = 0
+        # Example dates: [9/1/2020, 10/1/2020, 11/1/2020, 12/1/2020,
+        #                 1/1/2021, 2/1/2021, 2/15/2021]
         for i in range(len(dates)):
-            d = dates[i]
             # Fist of the month might not be a day that the stock market is
             # open. If it is not then subtract one day until it is in df.index
+            d = dates[i]
             while d not in df.index or d in self.daysClosed:
                 d -= td(days=1)
-
+            # Get close price
             price = df.loc[d, 'Close']
+            # Calculate percent change
             pc = (last - price) / price
-            # weight increases with each month. weight adds weight to the more
-            # recent slopes
+            # Weight increases each month. More weight is added to recent slopes
             weight = i + 1
+            # Add to normalizer, this will normalize the cumulative slopes.
             normalizer += weight
-            # adjSlope adjusts the percent change (slope) with percent changes
-            # of more recent months weighting in more
+            # Add to the cumulative slope
             adjSlope += pc * (weight)
             self.changes.append(pc)
+
         self.record['slope'] = round(adjSlope / normalizer, 3)
 
         if adjSlope < 0:
@@ -199,7 +211,7 @@ class Stock():
     def checkNegativeIncome(self):
         """Check if two recent quarters had negative incomes."""
         def getIncome(report, i, period):
-            income  = report.loc[i, 'netIncome']
+            income = report.loc[i, 'netIncome']
             if income in ['None', '0', 0]:
                 income = self.getInput(report, 'netIncome', i, period)
             return income

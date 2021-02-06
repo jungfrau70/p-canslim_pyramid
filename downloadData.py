@@ -81,6 +81,8 @@ def download(file, dataFolder, apikey):
     """Download stock ticker data using Alpha Vantage."""
     dfStocks = pd.read_csv(file)
 
+    assert 'Symbol' in dfStocks.columns, 'Symbol column is not in stock list'
+
     assert type(dfStocks.loc[len(dfStocks) - 1, 'Symbol']) is str, (
         'The last row does not have a symbol. Make sure last row is not blank.')
 
@@ -88,9 +90,10 @@ def download(file, dataFolder, apikey):
     if 'Downloaded' not in dfStocks.columns:
         dfStocks['Downloaded'] = 0
 
-    assert any(dfStocks['Downloaded'] == 0), (
-        'All symbols in stock list have been downloaded, i.e. downloaded '
-        'column is all 1s or -1s')
+    if all(dfStocks['Downloaded'] != 0):
+        print('All symbols in stock list have been downloaded, i.e. downloaded'
+              ' column is all 1s or -1s')
+        return
 
     count, seconds, earlier = reset()
 
@@ -118,11 +121,8 @@ def download(file, dataFolder, apikey):
             count, seconds, earlier = reset()
             dfStocks.to_csv(file, index=False)
 
-        stock = dfStocks.iloc[i, 0]
-        try:
-            print('Downloading ' + stock + '. Index: ' + str(i) + ' | ' + str(i))
-        except TypeError:
-            import pdb; pdb.set_trace()
+        stock = dfStocks.loc[i, 'Symbol']
+        print('Downloading ' + stock + '. Index: ' + str(i))
 
         # Get data ============================================================
         returned = getData(stock, dataFolder, apikey)
