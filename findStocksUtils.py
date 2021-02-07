@@ -89,7 +89,7 @@ def makeDirectory(dataFolder):
             os.mkdir(folder)
 
 
-def saveResults(record, columns):
+def saveAll(record, columns):
     """Save test results after analyzing all stocks."""
     filename = date.today().strftime('%Y-%m-%d') + ' Results.csv'
 

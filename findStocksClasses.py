@@ -184,7 +184,7 @@ class Stock():
         adjSlope = 0
         normalizer = 0
         # Example dates: [9/1/2020, 10/1/2020, 11/1/2020, 12/1/2020,
-        #                 1/1/2021, 2/1/2021, 2/15/2021]
+        #                 1/1/2021, 2/1/2021]
         for i in range(len(dates)):
             # Fist of the month might not be a day that the stock market is
             # open. If it is not then subtract one day until it is in df.index

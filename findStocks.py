@@ -18,7 +18,7 @@ Additional rules that automatically disqualify stock
 
 import argparse
 from downloadData import download
-from findStocksUtils import (getStockList, findProcessed, saveResults,
+from findStocksUtils import (getStockList, findProcessed, saveAll,
                              updateProcessed, makeDirectory, checkDataMatches)
 from findStocksClasses import Stock
 
@@ -40,18 +40,19 @@ def getInputs():
     apikey = params['key'] if 'key' in params else None
     dataFolder = params['data_folder']
     flexible = not params['not_flexible']
-    return stockFile, dataFolder, apikey, flexible
+    record = []
+    return stockFile, dataFolder, apikey, flexible, record
 
 
-def availableData(stockFile, dataFolder, apikey):
+def getData(stockFile, dataFolder, apikey):
     """Download the data and/or get list of stocks ready for analysis."""
     # Create folders for script to work
     makeDirectory(dataFolder)
 
-    # User can create their own data folder -assuming not using Alpha
-    # Vantage- in which case need column of downloaded in stock list.csv
+    # Use predownloaded data
     if apikey is None:
         checkDataMatches(stockFile, dataFolder)
+    # Or download data from Alpha Vantage
     else:
         download(stockFile, dataFolder, apikey)
 
@@ -66,7 +67,7 @@ def availableData(stockFile, dataFolder, apikey):
     # final list is used to collect test results
     record = []
 
-    return symbols, record
+    return symbols
 
 
 def preliminaryTests(stock):
@@ -96,20 +97,21 @@ def preliminaryTests(stock):
     stock.reduceDF()
 
 
-def manageMissingData(stock, r):
+def manageBadData(stock, r):
     """Manage missing data."""
     # Identify missing data
     stock.miss[r] = stock.identifyMissing(stock.reports[r])
 
+    # If user is not flexible, get user input when missing data is encountered
     if not stock.flex:
         stock.reports[r] = stock.getData(stock.reports[r],
                                          stock.miss[r])
+    # Otherwise if user is flexible, copy recent data over to missing data
     else:
-        # Copy recent data to missing data
         stock.reports[r], stock.miss[r] = stock.copy(stock.reports[r],
                                                      stock.miss[r])
 
-    # Change column type to numeric if was object
+    # Change column type to numeric if is object
     stock.reports[r] = stock.checkType(stock.reports[r])
 
     # Check if shares are missing trailing zeros
@@ -136,7 +138,7 @@ def analyzeStock(stock, r):
         stock.averagePercentChange(stock.reports[r])
 
 
-def updateFiles(stock, s, stockFile, record):
+def saveResults(stock, s, stockFile, record):
     """Save results after processing stock."""
     # Save stock information
     stock.save()
@@ -146,32 +148,46 @@ def updateFiles(stock, s, stockFile, record):
 
     # Append record to later save
     record.append([x for x in stock.record.values()])
+
     return record
 
 
 if __name__ == '__main__':
 
-    stockFile, dataFolder, apikey, flexible = getInputs()
-    symbols, record = availableData(stockFile, dataFolder, apikey)
+    # Get user inputs
+    stockFile, dataFolder, apikey, flexible, record = getInputs()
 
+    # Get financial report data
+    symbols = getData(stockFile, dataFolder, apikey)
+
+    # Loop through all stocks
     for s in symbols:
         print('>>>', s)
+
+        # Initialize Stock object
         stock = Stock(s, dataFolder, flexible)
+
+        # Run preliminary tests to check if stock is disqualified
         preliminaryTests(stock)
 
-        # Skip stock if it failed preliminary tests
+        # Skip stock if it failed preliminary tests. Update the *Processed.csv
         if stock.errorMessage != 'processed':
             updateProcessed(stockFile, s, stock.errorMessage)
             continue
 
         for r in stock.reports:
-            manageMissingData(stock, r)
+            # Manage missing data and other inconsistencies in data
+            manageBadData(stock, r)
+
+            # Calculate new metrics and run stock tests
             analyzeStock(stock, r)
 
-        record = updateFiles(stock, s, stockFile, record)
+        # Save data and update files
+        record = saveResults(stock, s, stockFile, record)
 
+    # Assert can occur when all stocks fail preliminary tests
     assert record != [], 'No procssed stocks to save to *Results.csv'
 
-    # Save the test results
+    # Save the test results for all stocks
     columns = [x for x in stock.record.keys()]
-    saveResults(record, columns)
+    saveAll(record, columns)

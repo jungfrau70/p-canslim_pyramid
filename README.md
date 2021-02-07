@@ -2,8 +2,9 @@
 
 ## Description
 
-These scripts will automate the process of finding stocks worth investing in.
-For details about how stocks are chosen please go to **INSERT MEDIUM ARTICLE LINK**
+These scripts automate the process of finding stocks worth investing in.
+For details about how to use this repository please go to
+https://hartrockwell.medium.com/how-to-find-stocks-to-invest-in-using-python-87b5169190d5
 
 ## Installation
 
@@ -32,25 +33,27 @@ To get some help
 - `python findStocks.py --help`
 
 Data downloaded from Alpha Vantage's API is not perfect and there is often
-data missing. The scripts are set up to copy recent data if it is missing.
+data missing. The scripts are set up to copy recent data if data is missing.
 The program can be set up to have the user input missing data. If you would
 like to find the missing data from SEC.gov and input it manually add the
 argument `--not_flexible`.
 
-If the program is run successfully the following folders will be saved:
+After running the program, the following files and folders will be saved:
 - **Results.csv* summarizing the Results
-- **Processed.csv* keeps track of which stocks have already been processed
+- **Processed.csv* keeps track of processed stocks and error messages
 - *Data* folder includes data downloaded using Alpha Vantage API
-- *Processed* folder includes condensed financial information that was used to determine which stocks are good
+- *Processed* folder includes condensed financial data used to determine which stocks are good
 
-You can also look at the **Processed.csv* to find error messages indicating
+You can look at the **Processed.csv* to find error messages indicating
 which stocks were unable to be processed. Check out the docstring at the top of
 `findStocksClasses.py` for more information about the error messages and how
 to correct them.
 
 ## Support
 
-Much more information is provided in this Medium article **INSERT MEDIUM ARTICLE LINK** or you can email *hart.sensr@gmail.com*
+Much more information is provided in this Medium article
+https://hartrockwell.medium.com/how-to-find-stocks-to-invest-in-using-python-87b5169190d5
+or you can email *hart.sensr@gmail.com* for support
 
 ## Contributing
 
