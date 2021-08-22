@@ -49,6 +49,12 @@ which stocks were unable to be processed. Check out the docstring at the top of
 `findStocksClasses.py` for more information about the error messages and how
 to correct them.
 
+## Re-running the program
+A maintenance script has been included in the `utilities` folder to clear temporary files automatically so that the stock-search can be re-run. To run this:
+- First enable the script to be executed via running `sudo chmod +x ./utilities/remove_stale_files.sh` from the root directory of this project. 
+- Run `sudo ./utilities/remove_stale_files.sh` to clear your stale files
+- Stock-search is ready to run again
+
 ## Support
 
 Much more information is provided in this Medium article
