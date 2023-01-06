@@ -1,0 +1,25 @@
+CARR
+COP
+CTVA
+DOW
+OGN
+
+OTIS,not processed
+
+>>> OGN
+Traceback (most recent call last):
+  File "C:\work\stock-search-public\findStocks.py", line 171, in <module>
+    preliminaryTests(stock)
+  File "C:\work\stock-search-public\findStocks.py", line 76, in preliminaryTests
+    stock.prelimTests()
+  File "C:\work\stock-search-public\findStocksClasses.py", line 124, in prelimTests
+    self.ab, self.ai, minRowsA, unaligna = removeExcess(self.ab, self.ai, 4)
+  File "C:\work\stock-search-public\findStocksClasses.py", line 101, in removeExcess
+    if not all(b['fiscalDateEnding'] == i['fiscalDateEnding']):
+  File "C:\work\stock-search-public\venv\lib\site-packages\pandas\core\ops\common.py", line 72, in new_method
+    return method(self, other)
+  File "C:\work\stock-search-public\venv\lib\site-packages\pandas\core\arraylike.py", line 42, in __eq__
+    return self._cmp_method(other, operator.eq)
+  File "C:\work\stock-search-public\venv\lib\site-packages\pandas\core\series.py", line 6237, in _cmp_method
+    raise ValueError("Can only compare identically-labeled Series objects")
+ValueError: Can only compare identically-labeled Series objects
