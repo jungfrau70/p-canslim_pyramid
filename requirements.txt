@@ -19,12 +19,14 @@ pandas_datareader
 pandas-ods-reader
 pandoc
 Pillow
+plotly
 python-dateutil
 pyparsing
 pytz
 regex
 requests
 scipy
+TA_Lib-0.4.24-cp310-cp310-win_amd64.whl
 yfinance
 six
 soupsieve

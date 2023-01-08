@@ -1,0 +1,77 @@
+Metadata-Version: 2.1
+Name: pandas-ods-reader
+Version: 0.1.4
+Summary: Read in .ods and .fods files and return a pandas.DataFrame.
+Home-page: https://github.com/iuvbio/pandas_ods_reader
+License: MIT
+Keywords: data,io,pandas,ods
+Author: iuvbio
+Author-email: iuvbio@users.noreply.github.com
+Requires-Python: >=3.7,<4.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Utilities
+Requires-Dist: ezodf (>=0.3.2,<0.4.0)
+Requires-Dist: importlib_metadata (>=4.8.1,<5.0.0); python_version >= "3.7" and python_version < "3.8"
+Requires-Dist: lxml (>=4.6.3,<5.0.0)
+Requires-Dist: pandas (>=1.0.0,<2.0.0)
+Project-URL: Repository, https://github.com/iuvbio/pandas_ods_reader
+Description-Content-Type: text/markdown
+
+pandas-ods-reader
+===
+
+Provides a function to read in a **.ods** or **.fods** file and returns a pandas DataFrame.
+
+It uses `ezodf` to read in **.ods** files. Since **.fods** files are essentially xml, `lxml` is used to read them. The correct parser is automatically chosen based on the file's extension.
+
+If a range is specified in the sheet to be imported, it seems that `ezodf` imports empty cells as well. Therefore, completely empty rows and columns are dropped from the DataFrame, before it is returned. Only trailing empty rows and columns are dropped.
+
+If the ODS file contains duplicated column names, they will be numbered and the number is appended to the column name in the resulting DataFrame.
+
+Dependencies
+---
+
+-   `ezodf`
+-   `lxml`
+-   `pandas`
+
+Installation
+---
+
+`pip install pandas-ods-reader`
+
+Usage
+---
+
+```Python
+from pandas_ods_reader import read_ods
+
+path = "path/to/file.ods"
+
+# by default the first sheet is imported
+df = read_ods(path)
+
+# load a sheet based on its index (1 based)
+sheet_idx = 2
+df = read_ods(path, sheet_idx)
+
+# load a sheet based on its name
+sheet_name = "sheet1"
+df = read_ods(path, sheet_name)
+
+# load a file that does not contain a header row
+# if no columns are provided, they will be numbered
+df = read_ods(path, 1, headers=False)
+
+# load a file and provide custom column names
+# if headers is True (the default), the header row will be overwritten
+df = read_ods(path, 1, columns=["A", "B", "C"])
+```
+
