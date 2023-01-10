@@ -20,6 +20,7 @@ pandas-ods-reader
 pandoc
 Pillow
 plotly
+plyer
 python-dateutil
 pyparsing
 pytz
