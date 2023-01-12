@@ -27,7 +27,9 @@ pytz
 regex
 requests
 scipy
-TA_Lib-0.4.24-cp310-cp310-win_amd64.whl
+ta
+# TA_Lib-0.4.24-cp310-cp310-win_amd64.whl
+torch
 yfinance
 six
 soupsieve
