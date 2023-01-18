@@ -73,10 +73,18 @@ def findProcessed(f, s):
     return symbols
 
 
-def updateProcessed(f, s, error):
+def updateProcessed(f, s, error, record):
     """Update processed file."""
-    f = f.rstrip('.csv') + '_Processed.csv'
-    df = pd.read_csv(f)
+    if os.path.exists(f):
+        exists = True
+        df = pd.read_csv(f)
+    else:
+        exists = False
+
+    record = np.array(record)
+
+    # Search through *Results.csv and find and replace rows of stock data
+    # if they are in the dataframe
     i = df[df['Symbol'] == s].index.item()
     df.loc[i, 'Processed'] = error.lstrip('_')
     df.to_csv(f, index=False)

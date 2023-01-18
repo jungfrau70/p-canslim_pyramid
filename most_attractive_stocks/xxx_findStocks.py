@@ -150,30 +150,34 @@ def saveResults(stock, s, stockFile, record):
 
     return record
 
-def testStock(s):
+def testStock(s, dataFolder, flexible):
     print('>>>', s)
+    
+    try:
+        # Initialize Stock object
+        stock = Stock(s, dataFolder, flexible)
 
-    # Initialize Stock object
-    stock = Stock(s, dataFolder, flexible)
+        # Run preliminary tests to check if stock is disqualified
+        preliminaryTests(stock)
 
-    # Run preliminary tests to check if stock is disqualified
-    preliminaryTests(stock)
+        # Skip stock if it failed preliminary tests. Update the *Processed.csv
+        if stock.errorMessage != 'processed':
+            updateProcessed(stockFile, s, stock.errorMessage)
 
-    # Skip stock if it failed preliminary tests. Update the *Processed.csv
-    if stock.errorMessage != 'processed':
-        updateProcessed(stockFile, s, stock.errorMessage)
+        for r in stock.reports:
+            # Manage missing data and other inconsistencies in data
+            manageBadData(stock, r)
 
-    for r in stock.reports:
-        # Manage missing data and other inconsistencies in data
-        manageBadData(stock, r)
+            # Calculate new metrics and run stock tests
+            analyzeStock(stock, r)
 
-        # Calculate new metrics and run stock tests
-        analyzeStock(stock, r)
-
-    # Save data and update files
-    record = saveResults(stock, s, stockFile, record)
-    print("returned")
-    return record
+        # Save data and update files
+        record = saveResults(stock, s, stockFile, record)
+        print("returned")
+        return record
+    except Exception as e:
+        print(e)
+        pass
 
 
 if __name__ == '__main__':
@@ -196,12 +200,12 @@ if __name__ == '__main__':
     workers = min(max_workers, len(symbols))
 
     # with futures.ThreadPoolExecutor(workers) as executor:
-    #     for number, record in zip(symbols, executor.map(testStock, symbols)):
+    #     for number, record in zip(symbols, executor.map(testStock, symbols, dataFolder, flexible)):
     #         print('%d is record: %s' % (number, record))
             
     # Option2) MultiProcessing
     with futures.ProcessPoolExecutor() as executor:
-        for stock, record in zip(symbols, executor.map(testStock, symbols)):
+        for stock, record in zip(symbols, executor.map(testStock, symbols, dataFolder, flexible)):
             # Assert can occur when all stocks fail preliminary tests
             assert record != [], 'No procssed stocks to save to *Results.csv'
 

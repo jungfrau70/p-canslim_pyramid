@@ -22,35 +22,39 @@ def getData(s, folder, key):
     assert 'Information' not in i.keys(), (
         'Max number of API calls reached for the day: 500 calls.')
 
-    if (
-            i == {}
-            or b == {}
-            or list(i.keys()) == ['Error Message']
-            or list(b.keys()) == ['Error Message']
-            or b['annualReports'] == []
-            or i['annualReports'] == []
-            ):
-        return 'API failed'
+    try:
+        if (
+                i == {}
+                or b == {}
+                or list(i.keys()) == ['Error Message']
+                or list(b.keys()) == ['Error Message']
+                or b['annualReports'] == []
+                or i['annualReports'] == []
+                ):
+            return 'API failed'
 
-    dfIncomeQuarterly = pd.DataFrame.from_dict(i['quarterlyReports'])
-    dfIncomeAnnual = pd.DataFrame.from_dict(i['annualReports'])
-    dfBalanceQuarterly = pd.DataFrame.from_dict(b['quarterlyReports'])
-    dfBalanceAnnual = pd.DataFrame.from_dict(b['annualReports'])
+        dfIncomeQuarterly = pd.DataFrame.from_dict(i['quarterlyReports'])
+        dfIncomeAnnual = pd.DataFrame.from_dict(i['annualReports'])
+        dfBalanceQuarterly = pd.DataFrame.from_dict(b['quarterlyReports'])
+        dfBalanceAnnual = pd.DataFrame.from_dict(b['annualReports'])
 
-    dateq = dfIncomeQuarterly.iloc[0, 0]
-    datea = dfIncomeAnnual.iloc[0, 0]
-    dateqdt = datetime.strptime(dateq, '%Y-%m-%d')
-    dateadt = datetime.strptime(datea, '%Y-%m-%d')
+        dateq = dfIncomeQuarterly.iloc[0, 0]
+        datea = dfIncomeAnnual.iloc[0, 0]
+        dateqdt = datetime.strptime(dateq, '%Y-%m-%d')
+        dateadt = datetime.strptime(datea, '%Y-%m-%d')
 
-    # Choose the more recent date for the filename
-    date = dateq if dateqdt > dateadt else datea
+        # Choose the more recent date for the filename
+        date = dateq if dateqdt > dateadt else datea
 
-    saveFile(s, date, 'Quarterly Income Statement', dfIncomeQuarterly, folder)
-    saveFile(s, date, 'Annual Income Statement', dfIncomeAnnual, folder)
-    saveFile(s, date, 'Quarterly Balance Sheet', dfBalanceQuarterly, folder)
-    saveFile(s, date, 'Annual Balance Sheet', dfBalanceAnnual, folder)
+        saveFile(s, date, 'Quarterly Income Statement', dfIncomeQuarterly, folder)
+        saveFile(s, date, 'Annual Income Statement', dfIncomeAnnual, folder)
+        saveFile(s, date, 'Quarterly Balance Sheet', dfBalanceQuarterly, folder)
+        saveFile(s, date, 'Annual Balance Sheet', dfBalanceAnnual, folder)
 
-    return 'no issues'
+        return 'no issues'
+    
+    except Exception as e:
+        return e
 
 
 def saveFile(s, date, fileType, df, folder):
@@ -128,7 +132,7 @@ def download(file, dataFolder, apikey):
         returned = getData(stock, dataFolder, apikey)
 
         if returned != 'no issues':
-            print('Error message: ' + returned + '. Skipping')
+            #print('Error message: ' + returned + '. Skipping')
             dfStocks.loc[i, 'Downloaded'] = '-1'
         else:
             dfStocks.loc[i, 'Downloaded'] = 1

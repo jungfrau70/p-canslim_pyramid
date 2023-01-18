@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Script to find new stocks to invest in.
 
@@ -16,6 +15,7 @@ Additional rules that automatically disqualify stock
 4. Stock price has a decreasing trend
 """
 
+import os
 import argparse
 from downloadData import download
 from findStocksUtils import (getStockList, findProcessed, saveAll,
@@ -32,6 +32,8 @@ def getInputs():
         'API key for Alpha Vantage'))
     parser.add_argument('--data_folder', type=str, default='Data', help=(
         'Folder with data downloaded from Alpha Vantage'))
+    parser.add_argument('--downloaded', type=bool, default=False, help=(
+        'data downloaded from Alpha Vantage'))    
     parser.add_argument('--not_flexible', action='store_true', help=(
         'Add argument to manually input data from sec.gov if it is missing'))
 
@@ -41,7 +43,8 @@ def getInputs():
     dataFolder = params['data_folder']
     flexible = not params['not_flexible']
     record = []
-    return stockFile, dataFolder, apikey, flexible, record
+    downloaded = params['downloaded']
+    return stockFile, dataFolder, apikey, flexible, record, downloaded
 
 
 def getData(stockFile, dataFolder, apikey):
@@ -144,7 +147,7 @@ def saveResults(stock, s, stockFile, record):
     stock.save()
 
     # Update the processed file
-    updateProcessed(stockFile, s, stock.errorMessage)
+    updateProcessed(stockFile, s, stock.errorMessage, record)
 
     # Append record to later save
     record.append([x for x in stock.record.values()])
@@ -152,42 +155,55 @@ def saveResults(stock, s, stockFile, record):
     return record
 
 
+def testStock(s, dataFolder, flexible, record):
+    print('>>>', s)
+
+    # Initialize Stock object
+    stock = Stock(s, dataFolder, flexible)
+
+    # Run preliminary tests to check if stock is disqualified
+    preliminaryTests(stock)
+
+    # Skip stock if it failed preliminary tests. Update the *Processed.csv
+    if stock.errorMessage != 'processed':
+        updateProcessed(stockFile, s, stock.errorMessage, record)
+
+    for r in stock.reports:
+        # Manage missing data and other inconsistencies in data
+        manageBadData(stock, r)
+
+        # Calculate new metrics and run stock tests
+        analyzeStock(stock, r)
+
+    # Save data and update files
+    record = saveResults(stock, s, stockFile, record)
+    print("returned")
+    return record
+
+
 if __name__ == '__main__':
 
     # Get user inputs
-    stockFile, dataFolder, apikey, flexible, record = getInputs()
+    stockFile, dataFolder, apikey, flexible, record, downloaded = getInputs()
 
     # Get financial report data
-    symbols = getData(stockFile, dataFolder, apikey)
+    if downloaded:
+        filenames = []
+        for filename in os.listdir(dataFolder)[1:]:
+            # Get the substring of the filename
+            substring = filename.split(" ")[0] # gets the first 5 characters
+            filenames.append(substring)
+        symbols = list(set(filenames))            
+    else:
+        symbols = getData(stockFile, dataFolder, apikey)
 
     # Loop through all stocks
     for s in symbols:
-        print('>>>', s)
+        record = testStock(s, dataFolder, flexible, record)
 
-        # Initialize Stock object
-        stock = Stock(s, dataFolder, flexible)
+        # Assert can occur when all stocks fail preliminary tests
+        assert record != [], 'No procssed stocks to save to *Results.csv'
 
-        # Run preliminary tests to check if stock is disqualified
-        preliminaryTests(stock)
-
-        # Skip stock if it failed preliminary tests. Update the *Processed.csv
-        if stock.errorMessage != 'processed':
-            updateProcessed(stockFile, s, stock.errorMessage)
-            continue
-
-        for r in stock.reports:
-            # Manage missing data and other inconsistencies in data
-            manageBadData(stock, r)
-
-            # Calculate new metrics and run stock tests
-            analyzeStock(stock, r)
-
-        # Save data and update files
-        record = saveResults(stock, s, stockFile, record)
-
-    # Assert can occur when all stocks fail preliminary tests
-    assert record != [], 'No procssed stocks to save to *Results.csv'
-
-    # Save the test results for all stocks
-    columns = [x for x in stock.record.keys()]
-    saveAll(record, columns)
+        # Save the test results for all stocks
+        columns = [x for x in record.keys()]
+        saveAll(record, columns)

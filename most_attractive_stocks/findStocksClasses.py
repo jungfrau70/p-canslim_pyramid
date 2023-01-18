@@ -75,6 +75,7 @@ class Stock():
                            dt(2021, 1, 1), dt(2021, 1, 18), dt(2021, 2, 15),
                            dt(2021, 4, 2), dt(2021, 5, 31), dt(2021, 7, 5),
                            dt(2021, 9, 6), dt(2021, 11, 25), dt(2021, 12, 24)]
+        self.reports = []
 
     def getDate(self):
         """Get the date of the balance sheet and income statement."""
