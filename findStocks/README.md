@@ -2,6 +2,7 @@
 
 ## RUN
 del ./data/SP500_2023-01-18_Processed.csv
+
 python findStocks/findStocks.py --stock_list "./data/SP500_2023-01-18.csv" --data_folder "./data/financial" --report_folder "./report"
 
 ## Download from Original source, if required
