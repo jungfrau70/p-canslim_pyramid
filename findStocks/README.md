@@ -1,3 +1,5 @@
+https://medium.com/analytics-vidhya/how-to-find-stocks-to-invest-in-using-python-87b5169190d5
+
 # Stock Search
 
 ## RUN
