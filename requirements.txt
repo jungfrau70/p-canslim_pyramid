@@ -15,6 +15,7 @@ matplotlib
 numpy
 packaging
 pandas
+pandas_ta
 pandas_datareader
 pandas-ods-reader
 pandoc
@@ -27,7 +28,8 @@ pytz
 regex
 requests
 scipy
-ta
+# ta-lib
+git+https://github.com/twopirllc/pandas-ta
 # TA_Lib-0.4.24-cp310-cp310-win_amd64.whl
 torch
 yfinance
