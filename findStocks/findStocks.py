@@ -18,11 +18,18 @@ Additional rules that automatically disqualify stock
 
 import os
 import argparse
+import datetime as dt
+import pandas as pd
 from downloadData import download
+from dateutil.relativedelta import relativedelta
 from findStocksUtils import (getStockList, findProcessed, saveAll,
                              updateProcessed, makeDirectory, checkDataMatches)
 from findStocksClasses import Stock
 
+""" datetime util """
+now = dt.datetime.now()
+lastday = now + relativedelta(months=0, days=-1)
+end_date = lastday.strftime('%Y-%m-%d')
 
 def getInputs():
     """Parse arguments."""
@@ -65,8 +72,9 @@ def getData(stockFile, dataFolder, apikey):
 
     # Get stock symbols for unprocessed stock data
     symbols = findProcessed(stockFile, allSymbols)
-
-    assert symbols != [], 'No stocks were found in *_Processed.csv file'
+    
+    if symbols != []:
+        print('No stocks were found in *_Processed.csv file')
 
     # final list is used to collect test results
     record = []
@@ -163,45 +171,83 @@ if __name__ == '__main__':
 
     # Get financial report data
     symbols = getData(stockFile, dataFolder, apikey)
+    if len(symbols) > 0:
 
-    # Make the Processed directory
-    processedDir = "data/Processed"
-    if not os.path.exists(processedDir):
-        makeDirectory(processedDir)
+        # Make the Processed directory
+        processedDir = "data/Processed"
+        if not os.path.exists(processedDir):
+            makeDirectory(processedDir)
+            
+        # Loop through all stocks
+        for s in symbols:
+            print('>>>', s)
+
+            # Initialize Stock object
+            stock = Stock(s, dataFolder, flexible)
+
+            # Run preliminary tests to check if stock is disqualified
+            preliminaryTests(stock)
+
+            # Skip stock if it failed preliminary tests. Update the *Processed.csv
+            if stock.errorMessage != 'processed':
+                updateProcessed(stockFile, s, stock.errorMessage)
+                continue
+
+            for r in stock.reports:
+                try: 
+                    # Manage missing data and other inconsistencies in data
+                    manageBadData(stock, r)
+
+                    # Calculate new metrics and run stock tests
+                    analyzeStock(stock, r)
+                except Exception as e:
+                    print(e)                
+
+            # Save data and update files
+            record = saveResults(stock, s, stockFile, record)
+
+        # Assert can occur when all stocks fail preliminary tests
+        if record != []:
+            print('No procssed stocks to save to *Results.csv')
+
+        # Save the test results for all stocks
+        columns = [x for x in stock.record.keys()]
         
-    # Loop through all stocks
-    for s in symbols:
-        print('>>>', s)
+        makeDirectory(reportFolder)
+        saveAll(reportFolder, record, columns)
+        
+    # In addition, save most attractive stocks that passed the test below
+    """
+    Check if stocks pass percent change tests.
 
-        # Initialize Stock object
-        stock = Stock(s, dataFolder, flexible)
-
-        # Run preliminary tests to check if stock is disqualified
-        preliminaryTests(stock)
-
-        # Skip stock if it failed preliminary tests. Update the *Processed.csv
-        if stock.errorMessage != 'processed':
-            updateProcessed(stockFile, s, stock.errorMessage)
-            continue
-
-        for r in stock.reports:
-            try: 
-                # Manage missing data and other inconsistencies in data
-                manageBadData(stock, r)
-
-                # Calculate new metrics and run stock tests
-                analyzeStock(stock, r)
-            except Exception as e:
-                print(e)                
-
-        # Save data and update files
-        record = saveResults(stock, s, stockFile, record)
-
-    # Assert can occur when all stocks fail preliminary tests
-    assert record != [], 'No procssed stocks to save to *Results.csv'
-
-    # Save the test results for all stocks
-    columns = [x for x in stock.record.keys()]
+    1. Annual - EPS must increase by 20%
+    2. Annual - ROE must be over 17%
+    3. Quarterly - EPS must increase by 20%
+    4. 
+    Quarterly - Sales must increase by 20%
+    """
     
-    makeDirectory(reportFolder)
-    saveAll(reportFolder, record, columns)
+    data_dir = "./data"
+    input_file = f"{data_dir}/SP500_{end_date}_Processed.csv"
+
+    """ Load from CSV """
+    df = pd.read_csv(input_file)
+
+    df_failed = df[df["Processed"] != "processed"]
+    df_processed = df[df["Processed"].astype(str).str.contains("processed|processed_copied")] 
+
+    report_dir = "./report"
+    output_file = f"{report_dir}/{now.strftime('%Y-%m-%d')} Financial Analysis Results.csv"
+
+    """ Load from CSV """
+    df = pd.read_csv(output_file)
+
+    df_candidates = df[df["numfailed"] < 1].sort_values(by=['slope'], ascending=False, axis=0)
+    df_candidates = df_candidates[["stock", "slope", "avgpc" ]]
+    df_candidates.to_csv(f"{report_dir}/most_attractives_{end_date}.csv", index=False)
+
+    print(f"total: {len(df)} \n---------------------\nfailed: {len(df_failed)} \nprocessed: {len(df_processed)}")
+
+    print("\n---------------------\nPlease find the report directory")
+    print(f"total candidates: {len(df_candidates)}")
+    df_candidates[["stock", "avgpc", "slope",]]
