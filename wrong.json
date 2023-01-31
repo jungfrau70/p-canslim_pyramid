@@ -1,0 +1,40 @@
+{
+    "var_partition": "Common",
+    "var_virtual_server_vip": "10.11.73.129",
+    "var_virtual_server_port": "80",
+    "http_profile": "",
+    "vars_pool": [
+        {
+            "postfix": "",
+            "lb_method": "round-robin",
+            "name": "sangam_HCounseling_proxy"
+        }
+    ],
+    "vars_node": [
+        {
+            "name": "HCounseling_gwangju",
+            "ip": "10.5.188.33",
+            "port": "80"
+        },
+        {
+            "name": "HCounseling_gwangju2",
+            "ip": "10.5.188.34",
+            "port": "80"
+        }
+    ],
+    "vars_ssl": [
+        {
+            "key_path": "",
+            "enable": false,
+            "name": "",
+            "crt_path": ""
+        }
+    ],
+    "vars_irule": [
+        {
+            "enable": false,
+            "name": "",
+            "file": ""
+        }
+    ]
+}

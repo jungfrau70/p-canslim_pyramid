@@ -26,10 +26,17 @@ from findStocksUtils import (getStockList, findProcessed, saveAll,
                              updateProcessed, makeDirectory, checkDataMatches)
 from findStocksClasses import Stock
 
+
+def last_working_day(given_date):
+    while True:
+        given_date -= dt.timedelta(days=1)
+        if given_date.weekday() not in [5,6]:
+            return given_date
+        
 """ datetime util """
 now = dt.datetime.now()
 lastday = now + relativedelta(months=0, days=-1)
-end_date = lastday.strftime('%Y-%m-%d')
+end_date = last_working_day(now).strftime('%Y-%m-%d')
 
 def getInputs():
     """Parse arguments."""
@@ -162,7 +169,7 @@ def saveResults(stock, s, stockFile, record):
     record.append([x for x in stock.record.values()])
 
     return record
-
+        
 
 if __name__ == '__main__':
 

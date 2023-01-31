@@ -1,4 +1,5 @@
 altair
+apache-airflow
 beautifulsoup4
 bs4
 certifi
@@ -37,3 +38,4 @@ six
 soupsieve
 termcolor
 urllib3
+vectorbt
