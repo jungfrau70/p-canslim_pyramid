@@ -36,6 +36,7 @@ torch
 yfinance
 six
 soupsieve
+tensorflow==2.9.0
 termcolor
 urllib3
 vectorbt
