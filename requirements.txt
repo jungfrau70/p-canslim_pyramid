@@ -13,6 +13,7 @@ idna
 jupyterlab
 kiwisolver
 matplotlib
+numba
 numpy
 packaging
 pandas
@@ -29,14 +30,14 @@ pytz
 regex
 requests
 scipy
-# ta-lib
+six
+soupsieve
+# ta-lib using `bash install-talib.sh`
 git+https://github.com/twopirllc/pandas-ta
 # TA_Lib-0.4.24-cp310-cp310-win_amd64.whl
 torch
-yfinance
-six
-soupsieve
 tensorflow
 termcolor
 urllib3
 vectorbt
+yfinance
