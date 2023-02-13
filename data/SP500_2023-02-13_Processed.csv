@@ -1,0 +1,500 @@
+Symbol,Processed
+MMM,slopefailed
+AOS,processed
+ABT,processed
+ABBV,processed
+ACN,processed
+ATVI,processed
+ADM,unaligned reports
+ADBE,processed
+ADP,slopefailed
+AAP,unaligned reports
+AES,negative net income
+AFL,processed
+A,processed
+APD,slopefailed
+AKAM,slopefailed
+ALK,processed
+ALB,processed
+ARE,processed
+ALGN,processed
+ALLE,processed
+LNT,slopefailed
+ALL,negative net income
+GOOGL,slopefailed
+GOOG,slopefailed
+MO,processed
+AMZN,negative net income
+AMCR,slopefailed
+AMD,processed
+AEE,slopefailed
+AAL,negative net income
+AEP,slopefailed
+AXP,processed
+AIG,processed
+AMT,unaligned reports
+AWK,processed
+AMP,processed
+ABC,slopefailed
+AME,processed
+AMGN,slopefailed
+APH,processed
+ADI,processed
+ANSS,processed
+AON,processed
+APA,slopefailed
+AAPL,processed
+AMAT,processed
+APTV,negative net income
+ACGL,processed
+ANET,processed
+AJG,processed
+AIZ,processed
+T,processed
+ATO,processed
+ADSK,processed
+AZO,unaligned reports
+AVB,processed
+AVY,processed
+BKR,negative net income
+BALL,negative net income
+BAC,processed
+BBWI,processed
+BAX,negative net income
+BDX,slopefailed
+WRB,slopefailed
+BRK-B,negative net income
+BBY,processed
+BIO,negative net income
+TECH,slopefailed
+BIIB,processed
+BLK,processed
+BK,processed
+BA,negative net income
+BKNG,processed
+BWA,processed
+BXP,processed
+BSX,processed
+BMY,slopefailed
+AVGO,processed
+BR,processed
+BRO,slopefailed
+BF-B,slopefailed
+CHRW,processed
+CDNS,processed
+CZR,negative net income
+CPT,processed
+CPB,unaligned reports
+COF,processed
+CAH,negative net income
+KMX,processed
+CCL,negative net income
+CARR,processed
+CTLT,unaligned reports
+CAT,processed
+CBOE,negative net income
+CBRE,processed
+CDW,processed
+CE,processed
+CNC,negative net income
+CNP,slopefailed
+CDAY,negative net income
+CF,slopefailed
+CRL,processed
+SCHW,processed
+CHTR,processed
+CVX,slopefailed
+CMG,processed
+CB,processed
+CHD,processed
+CI,unaligned reports
+CINF,negative net income
+CTAS,processed
+CSCO,processed
+C,unaligned reports
+CFG,processed
+CLX,processed
+CME,unaligned reports
+CMS,slopefailed
+KO,slopefailed
+CTSH,processed
+CL,slopefailed
+CMCSA,negative net income
+CMA,processed
+CAG,negative net income
+COP,slopefailed
+ED,slopefailed
+STZ,negative net income
+CEG,negative net income
+COO,processed
+CPRT,processed
+GLW,processed
+CTVA,negative net income
+CSGP,unaligned reports
+COST,processed
+CTRA,unaligned reports
+CCI,slopefailed
+CSX,processed
+CMI,processed
+CVS,negative net income
+DHI,processed
+DHR,slopefailed
+DRI,processed
+DVA,processed
+DE,processed
+DAL,processed
+XRAY,negative net income
+DVN,slopefailed
+DXCM,processed
+FANG,processed
+DLR,processed
+DFS,processed
+DISH,unaligned reports
+DIS,processed
+DG,slopefailed
+DLTR,processed
+D,negative net income
+DPZ,processed
+DOV,processed
+DOW,processed
+DTE,slopefailed
+DUK,slopefailed
+DD,processed
+DXC,processed
+EMN,processed
+ETN,processed
+EBAY,negative net income
+ECL,slopefailed
+EIX,negative net income
+EW,slopefailed
+EA,slopefailed
+ELV,slopefailed
+LLY,slopefailed
+EMR,slopefailed
+ENPH,slopefailed
+ETR,unaligned reports
+EOG,processed
+EPAM,processed
+EQT,negative net income
+EFX,processed
+EQIX,processed
+EQR,processed
+ESS,processed
+EL,processed
+ETSY,negative net income
+RE,negative net income
+EVRG,slopefailed
+ES,slopefailed
+EXC,slopefailed
+EXPE,negative net income
+EXPD,processed
+EXR,processed
+XOM,processed
+FFIV,slopefailed
+FDS,processed
+FAST,processed
+FRT,processed
+FDX,processed
+FITB,processed
+FRC,processed
+FSLR,negative net income
+FE,slopefailed
+FIS,slopefailed
+FISV,processed
+FLT,processed
+FMC,processed
+F,negative net income
+FTNT,processed
+FTV,unaligned reports
+FOXA,processed
+FOX,processed
+BEN,processed
+FCX,processed
+GRMN,processed
+IT,processed
+GEN,slopefailed
+GNRC,processed
+GD,slopefailed
+GE,negative net income
+GIS,slopefailed
+GM,processed
+GPC,processed
+GILD,processed
+GL,processed
+GPN,negative net income
+GS,processed
+HAL,processed
+HIG,processed
+HAS,slopefailed
+HCA,processed
+PEAK,processed
+HSIC,processed
+HSY,processed
+HES,processed
+HPE,negative net income
+HLT,processed
+HOLX,processed
+HD,processed
+HON,slopefailed
+HRL,slopefailed
+HST,negative net income
+HWM,processed
+HPQ,negative net income
+HUM,slopefailed
+HBAN,processed
+HII,slopefailed
+IBM,negative net income
+IEX,processed
+IDXX,processed
+ITW,processed
+ILMN,negative net income
+INCY,processed
+IR,processed
+INTC,negative net income
+ICE,negative net income
+IP,processed
+IPG,processed
+IFF,negative net income
+INTU,negative net income
+ISRG,slopefailed
+IVZ,processed
+INVH,processed
+IQV,processed
+IRM,processed
+JBHT,processed
+JKHY,slopefailed
+J,processed
+JNJ,slopefailed
+JCI,processed
+JPM,processed
+JNPR,processed
+K,slopefailed
+KDP,slopefailed
+KEY,processed
+KEYS,processed
+KMB,processed
+KIM,negative net income
+KMI,processed
+KLAC,processed
+KHC,processed
+KR,unaligned reports
+LHX,unaligned reports
+LH,processed
+LRCX,processed
+LW,processed
+LVS,negative net income
+LDOS,slopefailed
+LEN,processed
+LNC,negative net income
+LIN,processed
+LYV,negative net income
+LKQ,processed
+LMT,processed
+L,processed
+LOW,processed
+LUMN,slopefailed
+LYB,processed
+MTB,processed
+MRO,slopefailed
+MPC,processed
+MKTX,processed
+MAR,processed
+MMC,processed
+MLM,processed
+MAS,processed
+MA,processed
+MTCH,negative net income
+MKC,slopefailed
+MCD,processed
+MCK,slopefailed
+MDT,processed
+MRK,processed
+META,processed
+MET,processed
+MTD,processed
+MGM,negative net income
+MCHP,unaligned reports
+MU,negative net income
+MSFT,processed
+MAA,processed
+MRNA,processed
+MHK,negative net income
+MOH,slopefailed
+TAP,processed
+MDLZ,processed
+MPWR,unaligned reports
+MNST,processed
+MCO,processed
+MS,processed
+MOS,processed
+MSI,processed
+MSCI,processed
+NDAQ,slopefailed
+NTAP,processed
+NFLX,processed
+NWL,processed
+NEM,processed
+NWSA,processed
+NWS,processed
+NEE,slopefailed
+NKE,processed
+NI,slopefailed
+NDSN,processed
+NSC,slopefailed
+NTRS,processed
+NOC,slopefailed
+NCLH,negative net income
+NRG,slopefailed
+NUE,processed
+NVDA,processed
+NVR,processed
+NXPI,unaligned reports
+ORLY,processed
+OXY,slopefailed
+ODFL,processed
+OMC,processed
+ON,processed
+OKE,processed
+ORCL,processed
+OGN,processed
+OTIS,processed
+PCAR,processed
+PKG,processed
+PARA,processed
+PH,processed
+PAYX,slopefailed
+PAYC,slopefailed
+PYPL,negative net income
+PNR,processed
+PEP,unaligned reports
+PKI,unaligned reports
+PFE,slopefailed
+PCG,negative net income
+PM,processed
+PSX,processed
+PNW,processed
+PXD,processed
+PNC,slopefailed
+POOL,processed
+PPG,processed
+PPL,negative net income
+PFG,processed
+PG,slopefailed
+PGR,negative net income
+PLD,processed
+PRU,negative net income
+PEG,negative net income
+PTC,processed
+PSA,processed
+PHM,processed
+QRVO,processed
+PWR,processed
+QCOM,processed
+DGX,slopefailed
+RL,processed
+RJF,processed
+RTX,processed
+O,processed
+REG,processed
+REGN,processed
+RF,processed
+RSG,slopefailed
+RMD,slopefailed
+RHI,processed
+ROK,processed
+ROL,slopefailed
+ROP,processed
+ROST,processed
+RCL,negative net income
+SPGI,processed
+CRM,processed
+SBAC,slopefailed
+SLB,processed
+STX,processed_copied
+SEE,processed
+SRE,slopefailed
+NOW,processed
+SHW,slopefailed
+SBNY,slopefailed
+SPG,processed
+SWKS,processed
+SJM,slopefailed
+SNA,processed
+SEDG,unaligned reports
+SO,slopefailed
+LUV,slopefailed
+SWK,processed
+SBUX,processed
+STT,processed
+STLD,processed
+STE,negative net income
+SYK,processed
+SIVB,processed
+SYF,processed
+SNPS,processed
+SYY,slopefailed
+TMUS,negative net income
+TROW,processed
+TTWO,negative net income
+TPR,processed
+TRGP,processed
+TGT,processed
+TEL,processed
+TDY,processed
+TFX,processed
+TER,processed
+TSLA,processed
+TXN,processed
+TXT,processed
+TMO,unaligned reports
+TJX,processed
+TSCO,processed
+TT,processed
+TDG,processed
+TRV,processed
+TRMB,slopefailed
+TFC,processed
+TYL,slopefailed
+TSN,slopefailed
+USB,processed
+UDR,processed
+ULTA,processed
+UNP,slopefailed
+UAL,negative net income
+UPS,processed
+URI,processed
+UNH,slopefailed
+UHS,processed
+VLO,processed
+VTR,negative net income
+VRSN,processed
+VRSK,unaligned reports
+VZ,processed
+VRTX,slopefailed
+VFC,unaligned reports
+VTRS,unaligned reports
+VICI,negative net income
+V,processed
+VMC,processed
+WAB,processed
+WBA,negative net income
+WMT,negative net income
+WBD,negative net income
+WM,slopefailed
+WAT,unaligned reports
+WEC,slopefailed
+WFC,processed
+WELL,negative net income
+WST,processed
+WDC,processed
+WRK,slopefailed
+WY,processed
+WHR,negative net income
+WMB,slopefailed
+WTW,processed
+GWW,processed
+WYNN,negative net income
+XEL,slopefailed
+XYL,processed
+YUM,processed
+ZBRA,negative net income
